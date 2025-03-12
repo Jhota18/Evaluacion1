@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBEvaluacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AGENCIA">
+          <Key>
+            <PropertyRef Name="NIT" />
+          </Key>
+          <Property Name="NIT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="255" />
+          <Property Name="DIRECCION" Type="varchar" MaxLength="255" />
+          <Property Name="TELEFONO" Type="int" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="DOCUMENTO" />
+          </Key>
+          <Property Name="DOCUMENTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="255" />
+          <Property Name="TELEFONO" Type="int" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="TIPO_VIVIENDA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="VENTA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_AGENCIA" Type="int" />
+          <Property Name="ID_CLIENTE" Type="int" />
+          <Property Name="ID_VIVIENDA" Type="int" />
+          <Property Name="FECHA_VENTA" Type="date" />
+        </EntityType>
+        <EntityType Name="VIVIENDA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NUMERO_CUARTOS" Type="int" />
+          <Property Name="NUMERO_BAÑOS" Type="int" />
+          <Property Name="TAMAÑO_MCUADRADO" Type="float" />
+          <Property Name="NUMERO_PISOS" Type="int" />
+          <Property Name="ACCESORIOS" Type="varchar" MaxLength="255" />
+          <Property Name="ID_TIPO_VIVIENDA" Type="int" />
+          <Property Name="VALOR_VIVIENDA" Type="money" />
+        </EntityType>
+        <Association Name="FK_AGENCIA">
+          <End Role="AGENCIA" Type="Self.AGENCIA" Multiplicity="0..1" />
+          <End Role="VENTA" Type="Self.VENTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENCIA">
+              <PropertyRef Name="NIT" />
+            </Principal>
+            <Dependent Role="VENTA">
+              <PropertyRef Name="ID_AGENCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+          <End Role="VENTA" Type="Self.VENTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="DOCUMENTO" />
+            </Principal>
+            <Dependent Role="VENTA">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPO_VIVIENDA">
+          <End Role="TIPO_VIVIENDA" Type="Self.TIPO_VIVIENDA" Multiplicity="0..1" />
+          <End Role="VIVIENDA" Type="Self.VIVIENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_VIVIENDA">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VIVIENDA">
+              <PropertyRef Name="ID_TIPO_VIVIENDA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIVIENDA">
+          <End Role="VIVIENDA" Type="Self.VIVIENDA" Multiplicity="0..1" />
+          <End Role="VENTA" Type="Self.VENTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VIVIENDA">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VENTA">
+              <PropertyRef Name="ID_VIVIENDA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEvaluacionModelStoreContainer">
+          <EntitySet Name="AGENCIA" EntityType="Self.AGENCIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO_VIVIENDA" EntityType="Self.TIPO_VIVIENDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VENTA" EntityType="Self.VENTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VIVIENDA" EntityType="Self.VIVIENDA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AGENCIA" Association="Self.FK_AGENCIA">
+            <End Role="AGENCIA" EntitySet="AGENCIA" />
+            <End Role="VENTA" EntitySet="VENTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE" Association="Self.FK_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="VENTA" EntitySet="VENTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPO_VIVIENDA" Association="Self.FK_TIPO_VIVIENDA">
+            <End Role="TIPO_VIVIENDA" EntitySet="TIPO_VIVIENDA" />
+            <End Role="VIVIENDA" EntitySet="VIVIENDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIVIENDA" Association="Self.FK_VIVIENDA">
+            <End Role="VIVIENDA" EntitySet="VIVIENDA" />
+            <End Role="VENTA" EntitySet="VENTA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBEvaluacionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AGENCIA">
+          <Key>
+            <PropertyRef Name="NIT" />
+          </Key>
+          <Property Name="NIT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO" Type="Int32" />
+          <Property Name="EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VENTAs" Relationship="Self.FK_AGENCIA" FromRole="AGENCIA" ToRole="VENTA" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="DOCUMENTO" />
+          </Key>
+          <Property Name="DOCUMENTO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO" Type="Int32" />
+          <Property Name="EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VENTAs" Relationship="Self.FK_CLIENTE" FromRole="CLIENTE" ToRole="VENTA" />
+        </EntityType>
+        <EntityType Name="TIPO_VIVIENDA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VIVIENDAs" Relationship="Self.FK_TIPO_VIVIENDA" FromRole="TIPO_VIVIENDA" ToRole="VIVIENDA" />
+        </EntityType>
+        <EntityType Name="VENTA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_AGENCIA" Type="Int32" />
+          <Property Name="ID_CLIENTE" Type="Int32" />
+          <Property Name="ID_VIVIENDA" Type="Int32" />
+          <Property Name="FECHA_VENTA" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="AGENCIA" Relationship="Self.FK_AGENCIA" FromRole="VENTA" ToRole="AGENCIA" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK_CLIENTE" FromRole="VENTA" ToRole="CLIENTE" />
+          <NavigationProperty Name="VIVIENDA" Relationship="Self.FK_VIVIENDA" FromRole="VENTA" ToRole="VIVIENDA" />
+        </EntityType>
+        <EntityType Name="VIVIENDA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NUMERO_CUARTOS" Type="Int32" />
+          <Property Name="NUMERO_BAÑOS" Type="Int32" />
+          <Property Name="TAMAÑO_MCUADRADO" Type="Double" />
+          <Property Name="NUMERO_PISOS" Type="Int32" />
+          <Property Name="ACCESORIOS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ID_TIPO_VIVIENDA" Type="Int32" />
+          <Property Name="VALOR_VIVIENDA" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="TIPO_VIVIENDA" Relationship="Self.FK_TIPO_VIVIENDA" FromRole="VIVIENDA" ToRole="TIPO_VIVIENDA" />
+          <NavigationProperty Name="VENTAs" Relationship="Self.FK_VIVIENDA" FromRole="VIVIENDA" ToRole="VENTA" />
+        </EntityType>
+        <Association Name="FK_AGENCIA">
+          <End Role="AGENCIA" Type="Self.AGENCIA" Multiplicity="0..1" />
+          <End Role="VENTA" Type="Self.VENTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENCIA">
+              <PropertyRef Name="NIT" />
+            </Principal>
+            <Dependent Role="VENTA">
+              <PropertyRef Name="ID_AGENCIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENTE">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="0..1" />
+          <End Role="VENTA" Type="Self.VENTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="DOCUMENTO" />
+            </Principal>
+            <Dependent Role="VENTA">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIPO_VIVIENDA">
+          <End Role="TIPO_VIVIENDA" Type="Self.TIPO_VIVIENDA" Multiplicity="0..1" />
+          <End Role="VIVIENDA" Type="Self.VIVIENDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_VIVIENDA">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VIVIENDA">
+              <PropertyRef Name="ID_TIPO_VIVIENDA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VIVIENDA">
+          <End Role="VIVIENDA" Type="Self.VIVIENDA" Multiplicity="0..1" />
+          <End Role="VENTA" Type="Self.VENTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VIVIENDA">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="VENTA">
+              <PropertyRef Name="ID_VIVIENDA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEvaluacionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AGENCIAs" EntityType="Self.AGENCIA" />
+          <EntitySet Name="CLIENTEs" EntityType="Self.CLIENTE" />
+          <EntitySet Name="TIPO_VIVIENDA" EntityType="Self.TIPO_VIVIENDA" />
+          <EntitySet Name="VENTAs" EntityType="Self.VENTA" />
+          <EntitySet Name="VIVIENDAs" EntityType="Self.VIVIENDA" />
+          <AssociationSet Name="FK_AGENCIA" Association="Self.FK_AGENCIA">
+            <End Role="AGENCIA" EntitySet="AGENCIAs" />
+            <End Role="VENTA" EntitySet="VENTAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENTE" Association="Self.FK_CLIENTE">
+            <End Role="CLIENTE" EntitySet="CLIENTEs" />
+            <End Role="VENTA" EntitySet="VENTAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIPO_VIVIENDA" Association="Self.FK_TIPO_VIVIENDA">
+            <End Role="TIPO_VIVIENDA" EntitySet="TIPO_VIVIENDA" />
+            <End Role="VIVIENDA" EntitySet="VIVIENDAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VIVIENDA" Association="Self.FK_VIVIENDA">
+            <End Role="VIVIENDA" EntitySet="VIVIENDAs" />
+            <End Role="VENTA" EntitySet="VENTAs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBEvaluacionModelStoreContainer" CdmEntityContainer="DBEvaluacionEntities">
+          <EntitySetMapping Name="AGENCIAs">
+            <EntityTypeMapping TypeName="DBEvaluacionModel.AGENCIA">
+              <MappingFragment StoreEntitySet="AGENCIA">
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTEs">
+            <EntityTypeMapping TypeName="DBEvaluacionModel.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="DOCUMENTO" ColumnName="DOCUMENTO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_VIVIENDA">
+            <EntityTypeMapping TypeName="DBEvaluacionModel.TIPO_VIVIENDA">
+              <MappingFragment StoreEntitySet="TIPO_VIVIENDA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VENTAs">
+            <EntityTypeMapping TypeName="DBEvaluacionModel.VENTA">
+              <MappingFragment StoreEntitySet="VENTA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ID_AGENCIA" ColumnName="ID_AGENCIA" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="ID_VIVIENDA" ColumnName="ID_VIVIENDA" />
+                <ScalarProperty Name="FECHA_VENTA" ColumnName="FECHA_VENTA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIVIENDAs">
+            <EntityTypeMapping TypeName="DBEvaluacionModel.VIVIENDA">
+              <MappingFragment StoreEntitySet="VIVIENDA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NUMERO_CUARTOS" ColumnName="NUMERO_CUARTOS" />
+                <ScalarProperty Name="NUMERO_BAÑOS" ColumnName="NUMERO_BAÑOS" />
+                <ScalarProperty Name="TAMAÑO_MCUADRADO" ColumnName="TAMAÑO_MCUADRADO" />
+                <ScalarProperty Name="NUMERO_PISOS" ColumnName="NUMERO_PISOS" />
+                <ScalarProperty Name="ACCESORIOS" ColumnName="ACCESORIOS" />
+                <ScalarProperty Name="ID_TIPO_VIVIENDA" ColumnName="ID_TIPO_VIVIENDA" />
+                <ScalarProperty Name="VALOR_VIVIENDA" ColumnName="VALOR_VIVIENDA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
