@@ -65,15 +65,16 @@ namespace Evaluacion1.Clases
             try
             {
                 VIVIENDA viv = Consultar(vivienda.ID);
-                if (viv != null)
+                if (viv == null)
                 {
-                    dbEvaluacion.VIVIENDAs.Remove(vivienda);
-                    dbEvaluacion.SaveChanges();
-                    return "La vivienda se eliminó correctamente ";
+                    return "La vivienda no existe ";
                 }
                 else
                 {
-                    return "La vivienda no existe ";
+                    
+                    dbEvaluacion.VIVIENDAs.Remove(viv);
+                    dbEvaluacion.SaveChanges();
+                    return "La vivienda se eliminó correctamente ";
                 }
             }
             catch(Exception ex) {

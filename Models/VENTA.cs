@@ -9,6 +9,7 @@
 
 namespace Evaluacion1.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -19,9 +20,11 @@ namespace Evaluacion1.Models
         public Nullable<int> ID_CLIENTE { get; set; }
         public Nullable<int> ID_VIVIENDA { get; set; }
         public Nullable<System.DateTime> FECHA_VENTA { get; set; }
-    
+        [JsonIgnore]
         public virtual AGENCIA AGENCIA { get; set; }
+        [JsonIgnore]
         public virtual CLIENTE CLIENTE { get; set; }
+        [JsonIgnore]
         public virtual VIVIENDA VIVIENDA { get; set; }
     }
 }

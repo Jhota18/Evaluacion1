@@ -9,6 +9,7 @@
 
 namespace Evaluacion1.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -28,9 +29,10 @@ namespace Evaluacion1.Models
         public string ACCESORIOS { get; set; }
         public Nullable<int> ID_TIPO_VIVIENDA { get; set; }
         public Nullable<decimal> VALOR_VIVIENDA { get; set; }
-    
+        [JsonIgnore]
         public virtual TIPO_VIVIENDA TIPO_VIVIENDA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<VENTA> VENTAs { get; set; }
     }
 }
